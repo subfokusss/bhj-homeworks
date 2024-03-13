@@ -1,12 +1,10 @@
-// Получение элемента по его id
 const getHole = (index) => document.getElementById(`hole${index}`);
 
 let wins = 0;
 let losses = 0;
 
 const updateScore = () => {
-  document.getElementById('wins').textContent = wins;
-  document.getElementById('losses').textContent = losses;
+  document.getElementById('score').textContent = `Счет: ${wins} - ${losses}`;
 };
 
 const checkForMole = (event) => {
