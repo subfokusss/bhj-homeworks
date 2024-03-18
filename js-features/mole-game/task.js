@@ -1,10 +1,13 @@
 const getHole = (index) => document.getElementById(`hole${index}`);
+const deadCounter = document.getElementById('dead');
+const lostCounter = document.getElementById('lost');
 
 let wins = 0;
 let losses = 0;
 
 const updateScore = () => {
-  document.getElementById('score').textContent = `Счет: ${wins} - ${losses}`;
+  deadCounter.textContent = wins;
+  lostCounter.textContent = losses;
 };
 
 const checkForMole = (event) => {
@@ -33,13 +36,6 @@ const resetGame = () => {
   wins = 0;
   losses = 0;
   updateScore();
-
-  for (let i = 1; i <= 9; i++) {
-    getHole(i).classList.remove('hole_has-mole');
-  }
-
-  const randomHole = Math.floor(Math.random() * 9) + 1;
-  getHole(randomHole).classList.add('hole_has-mole');
 };
 
 for (let i = 1; i <= 9; i++) {
