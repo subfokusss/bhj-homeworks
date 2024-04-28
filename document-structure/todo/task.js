@@ -1,34 +1,30 @@
 document.addEventListener('DOMContentLoaded', function() {
     const taskInput = document.querySelector('#task-input');
+    const addTaskButton = document.querySelector('#add-task-btn');
     const taskList = document.querySelector('.task-list');
 
-    function addTask(taskContent) {
-        const taskItem = document.createElement('div');
-        taskItem.classList.add('task');
-
-        const taskTitle = document.createElement('div');
-        taskTitle.classList.add('task__title');
-        taskTitle.textContent = taskContent;
-
-        const removeButton = document.createElement('a');
-        removeButton.href = '#';
-        removeButton.classList.add('task__remove');
-        removeButton.textContent = '×';
-
-        removeButton.addEventListener('click', function(event) {
-            event.preventDefault();
-            taskItem.remove();
-        });
-
-        taskItem.appendChild(taskTitle);
-        taskItem.appendChild(removeButton);
-        taskList.appendChild(taskItem);
+    function addTask(title) {
+        const taskHTML = `
+            <div class="task">
+                <div class="task__title">${title}</div>
+                <a href="#" class="task__remove">&times;</a>
+            </div>
+        `;
+        taskList.insertAdjacentHTML('afterbegin', taskHTML);
     }
 
-    taskInput.addEventListener('keypress', function(event) {
-        if (event.key === 'Enter' && taskInput.value.trim() !== '') {
-            addTask(taskInput.value.trim());
-            taskInput.value = ''; 
+    addTaskButton.addEventListener('click', function() {
+        const taskTitle = taskInput.value.trim();
+        if (taskTitle !== '') {
+            addTask(taskTitle);
+            taskInput.value = '';
+        }
+    });
+
+    taskList.addEventListener('click', function(event) {
+        if (event.target.classList.contains('task__remove')) {
+            event.preventDefault();
+            event.target.parentElement.remove();
         }
     });
 });
