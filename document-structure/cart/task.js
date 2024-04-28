@@ -28,22 +28,22 @@ document.addEventListener('DOMContentLoaded', function() {
             const product = this.closest('.product');
             const productId = product.dataset.id;
             const quantity = parseInt(product.querySelector('.product__quantity-value').textContent);
-            const cartProduct = cart.querySelector(`.cart__product[data-id="${productId}"]`);
+            const cartProduct = cart.querySelector(`.cart_product[data-id="${productId}"]`);
 
             if (cartProduct) {
-                const cartProductCount = cartProduct.querySelector('.cart__product-count');
+                const cartProductCount = cartProduct.querySelector('.cart_product-count');
                 const currentCount = parseInt(cartProductCount.textContent);
                 cartProductCount.textContent = currentCount + quantity;
             } else {
                 const cartProductTemplate = document.createElement('div');
-                cartProductTemplate.classList.add('cart__product');
+                cartProductTemplate.classList.add('cart_product');
                 cartProductTemplate.dataset.id = productId;
 
                 const productImage = product.querySelector('.product__image').cloneNode(true);
                 cartProductTemplate.appendChild(productImage);
 
                 const productCount = document.createElement('div');
-                productCount.classList.add('cart__product-count');
+                productCount.classList.add('cart_product-count');
                 productCount.textContent = quantity;
                 cartProductTemplate.appendChild(productCount);
 
