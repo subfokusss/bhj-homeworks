@@ -3,6 +3,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const addTaskButton = document.querySelector('#add-task-btn');
     const taskList = document.querySelector('.task-list');
 
+    if (!taskInput || !addTaskButton || !taskList) return;
+
     function addTask(title) {
         const taskHTML = `
             <div class="task">
@@ -13,7 +15,8 @@ document.addEventListener('DOMContentLoaded', function() {
         taskList.insertAdjacentHTML('afterbegin', taskHTML);
     }
 
-    addTaskButton.addEventListener('click', function() {
+    addTaskButton.addEventListener('click', function(event) {
+        event.preventDefault();
         const taskTitle = taskInput.value.trim();
         if (taskTitle !== '') {
             addTask(taskTitle);
