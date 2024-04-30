@@ -1,21 +1,27 @@
 document.addEventListener('DOMContentLoaded', function() {
     const tooltips = document.querySelectorAll('.has-tooltip');
     let currentTooltip = null;
+    let tooltipElement = document.querySelector('.tooltip');
 
     tooltips.forEach(function(tooltip) {
         tooltip.addEventListener('click', function(event) {
             event.preventDefault();
 
             const title = this.getAttribute('title');
-            const tooltipElement = document.querySelector('.tooltip');
 
-            if (tooltipElement.innerText === title) {
+            if (tooltipElement && tooltipElement.innerText === title) {
                 tooltipElement.classList.toggle('tooltip_active');
                 return;
             }
 
             currentTooltip = title;
-            tooltipElement.innerText = title;
+            if (tooltipElement) tooltipElement.innerText = title;
+            else {
+                tooltipElement = document.createElement('div');
+                tooltipElement.classList.add('tooltip');
+                tooltipElement.innerText = title;
+                document.body.appendChild(tooltipElement);
+            }
 
             const tooltipRect = tooltipElement.getBoundingClientRect();
             const targetRect = tooltip.getBoundingClientRect();
@@ -32,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     document.addEventListener('click', function(event) {
-        const tooltipElement = document.querySelector('.tooltip');
+        if (!tooltipElement) return;
         if (!event.target.classList.contains('has-tooltip') && !tooltipElement.contains(event.target)) {
             tooltipElement.classList.remove('tooltip_active');
             currentTooltip = null;
