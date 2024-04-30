@@ -31,19 +31,21 @@ document.addEventListener('DOMContentLoaded', function() {
             const cartProduct = cart.querySelector(`.cart_product[data-id="${productId}"]`);
 
             if (cartProduct) {
-                const cartProductCount = cartProduct.querySelector('.cart_product-count');
+                const cartProductCount = cartProduct.querySelector('.cart__product-count');
                 const currentCount = parseInt(cartProductCount.textContent);
                 cartProductCount.textContent = currentCount + quantity;
             } else {
                 const cartProductTemplate = document.createElement('div');
-                cartProductTemplate.classList.add('cart_product');
+                cartProductTemplate.classList.add('cart__product');
                 cartProductTemplate.dataset.id = productId;
 
                 const productImage = product.querySelector('.product__image').cloneNode(true);
+                productImage.classList.remove('product__image');
+                productImage.classList.add('cart__product-image');
                 cartProductTemplate.appendChild(productImage);
 
                 const productCount = document.createElement('div');
-                productCount.classList.add('cart_product-count');
+                productCount.classList.add('cart__product-count');
                 productCount.textContent = quantity;
                 cartProductTemplate.appendChild(productCount);
 
