@@ -28,7 +28,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const product = this.closest('.product');
             const productId = product.dataset.id;
             const quantity = parseInt(product.querySelector('.product__quantity-value').textContent);
-            const cartProduct = cart.querySelector(`.cart_product[data-id="${productId}"]`);
+            const cartProducts = Array.from(cart.querySelectorAll('.cart__product'));
+            const cartProduct = cartProducts.find(product => product.dataset.id === productId);
 
             if (cartProduct) {
                 const cartProductCount = cartProduct.querySelector('.cart__product-count');
