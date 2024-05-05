@@ -15,8 +15,9 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             currentTooltip = title;
-            if (tooltipElement) tooltipElement.innerText = title;
-            else {
+            if (tooltipElement) {
+                tooltipElement.innerText = title;
+            } else {
                 tooltipElement = document.createElement('div');
                 tooltipElement.classList.add('tooltip');
                 tooltipElement.innerText = title;
@@ -38,7 +39,9 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     document.addEventListener('click', function(event) {
-        if (!tooltipElement) return;
+        if (!tooltipElement) {
+            return;
+        }
         if (!event.target.classList.contains('has-tooltip') && !tooltipElement.contains(event.target)) {
             tooltipElement.classList.remove('tooltip_active');
             currentTooltip = null;
