@@ -1,23 +1,17 @@
 document.addEventListener('DOMContentLoaded', function() {
     const productQuantityControls = document.querySelectorAll('.product__quantity-control');
-    const cart = document.querySelector('.cart');
+    const cartProductsContainer = document.querySelector('.cart__products'); // Контейнер для товаров в корзине
 
     productQuantityControls.forEach(function(control) {
         control.addEventListener('click', function() {
             const product = this.closest('.product');
-            const productId = product.dataset.id;
             const quantityValue = product.querySelector('.product__quantity-value');
             let quantity = parseInt(quantityValue.textContent);
 
-            if (this.classList.contains('product__quantity-control_dec')) {
-                if (quantity > 1) {
-                    quantity--;
-                    quantityValue.textContent = quantity;
-                }
-            }
-            else if (this.classList.contains('product__quantity-control_inc')) {
-                quantity++;
-                quantityValue.textContent = quantity;
+            if (this.classList.contains('product__quantity-control_dec') && quantity > 1) {
+                quantityValue.textContent = --quantity;
+            } else if (this.classList.contains('product__quantity-control_inc')) {
+                quantityValue.textContent = ++quantity;
             }
         });
     });
@@ -28,29 +22,20 @@ document.addEventListener('DOMContentLoaded', function() {
             const product = this.closest('.product');
             const productId = product.dataset.id;
             const quantity = parseInt(product.querySelector('.product__quantity-value').textContent);
-            const cartProducts = Array.from(cart.querySelectorAll('.cart__product'));
-            const cartProduct = cartProducts.find(product => product.dataset.id === productId);
+            const cartProduct = cartProductsContainer.querySelector(`.cart__product[data-id="${productId}"]`);
 
             if (cartProduct) {
                 const cartProductCount = cartProduct.querySelector('.cart__product-count');
-                const currentCount = parseInt(cartProductCount.textContent);
-                cartProductCount.textContent = currentCount + quantity;
+                cartProductCount.textContent = parseInt(cartProductCount.textContent) + quantity;
             } else {
-                const cartProductTemplate = document.createElement('div');
-                cartProductTemplate.classList.add('cart__product');
-                cartProductTemplate.dataset.id = productId;
-
-                const productImage = product.querySelector('.product__image').cloneNode(true);
-                productImage.classList.remove('product__image');
-                productImage.classList.add('cart__product-image');
-                cartProductTemplate.appendChild(productImage);
-
-                const productCount = document.createElement('div');
-                productCount.classList.add('cart__product-count');
-                productCount.textContent = quantity;
-                cartProductTemplate.appendChild(productCount);
-
-                cart.appendChild(cartProductTemplate);
+                const productImageSrc = product.querySelector('.product__image').src;
+                const cartProductHTML = `
+                    <div class="cart__product" data-id="${productId}">
+                        <img class="cart__product-image" src="${productImageSrc}">
+                        <div class="cart__product-count">${quantity}</div>
+                    </div>
+                `;
+                cartProductsContainer.insertAdjacentHTML('beforeend', cartProductHTML);
             }
         });
     });
