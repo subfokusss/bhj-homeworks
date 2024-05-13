@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const taskInput = document.querySelector('#task-input');
-    const addTaskButton = document.querySelector('#add-task-btn');
-    const taskList = document.querySelector('.task-list');
+    const taskInput = document.querySelector('#task__input');
+    const addTaskButton = document.querySelector('#tasks__add');
+    const taskList = document.querySelector('#tasks__list');
 
     function addTask(title) {
         const taskHTML = `
@@ -13,21 +13,19 @@ document.addEventListener('DOMContentLoaded', function() {
         taskList.insertAdjacentHTML('afterbegin', taskHTML);
     }
 
-    if (taskInput && addTaskButton && taskList) {
-        addTaskButton.addEventListener('click', function(event) {
-            event.preventDefault();
-            const taskTitle = taskInput.value.trim();
-            if (taskTitle !== '') {
-                addTask(taskTitle);
-                taskInput.value = '';
-            }
-        });
+    addTaskButton.addEventListener('click', function(event) {
+        event.preventDefault();
+        const taskTitle = taskInput.value.trim();
+        if (taskTitle !== '') {
+            addTask(taskTitle);
+            taskInput.value = '';
+        }
+    });
 
-        taskList.addEventListener('click', function(event) {
-            if (event.target.classList.contains('task__remove')) {
-                event.preventDefault();
-                event.target.parentElement.remove();
-            }
-        });
-    }
+    taskList.addEventListener('click', function(event) {
+        if (event.target.classList.contains('task__remove')) {
+            event.preventDefault();
+            event.target.parentElement.remove();
+        }
+    });
 });
